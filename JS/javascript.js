@@ -1,0 +1,669 @@
+let Currentsong = new Audio();
+let songs = [];
+let currFolder = "";
+let currentTrack = "";
+let lastVolume = 1;
+let albumCatalog = {
+    "Balakrishna": {
+        "title": "Bala Krishna Playlist",
+        "description": "Bala krishna songs for you",
+        "songs": [
+            "Andala Aatabomma Full Video Song _ Samarasimha Reddy _ Balakrishna _ Simran _ ETV Cinema.mp3",
+            "Full Video_ Jai Balayya Song [4K] _ Akhanda _ Nandamuri Balakrishna _ Boyapati Sreenu _ Thaman S.mp3",
+            "Haie Haie Song - Balakrishna, Shriya Saran Superhit Video Song _ Chennakesava Reddy Movie Songs HD (1).mp3",
+            "Haie Haie Song - Balakrishna, Shriya Saran Superhit Video Song _ Chennakesava Reddy Movie Songs HD.mp3",
+            "Narasimha Naidu Video Songs _ Chilakapachakoka Video Song _ Balakrishna, Simran _ Sri Balaji Video.mp3",
+            "O Priyathamaa Full Video Song __ Pattabhishekam Movie __ Balakrishna, Vijayashanti.mp3",
+            "Paisa Vasool Full Video Songs _ Paisa Vasool Movie _ Balakrishna, Puri Jagannadh, Anup Rubens.mp3",
+            "Sarkaru Raa Lyric Video _ Daaku Maharaaj _ Nandamuri Balakrishna _ Bobby Kolli _ Thaman S.mp3",
+            "Swathilo Muthyamantha 4K Video Song _ Bangaru Bullodu _ Balakrishna, Raveena Tandon _ Raj-Koti.mp3"
+        ]
+    },
+    "Chiranjeevi": {
+        "title": "Chiranjeevi Playlist",
+        "description": "Chiranjeevi songs for you",
+        "songs": [
+            "Abbanee Tiyyani Video Song __ Jagadeka Veerudu Atiloka Sundari Movie __ Chiranjeevi, Sridevi.mp3",
+            "Bangaru Kodi Petta Full Video Song _ Gharana Mogudu Telugu Movie _ Chiranjeevi _ Disco Shanthi.mp3",
+            "Chinnaga Chinnaga Full Video Song _ Tagore Video Songs _ Chiranjeevi, Shriya Saran _ Mani Sharma (1).mp3",
+            "Chinnaga Chinnaga Full Video Song _ Tagore Video Songs _ Chiranjeevi, Shriya Saran _ Mani Sharma.mp3",
+            "Dayi Dayi Damma Full Video Song _ Indra _ Chiranjeevi _ Sonali Bendre _ Mani Sharma _ B Gopal.mp3",
+            "Kodithe Kottali Full Video Song l Tagore Video Songs l Chiranjeevi, Shreya _ Mani Sharma.mp3",
+            "Manmadha Full Song II Tagore Songs II Chiranjeevi, Shreya.mp3",
+            "Meesaala Pilla Full Lyrical _ Mana ShankaraVaraPrasad Garu _ Chiranjeevi _ Nayanthara _Bheems Music.mp3",
+            "Radhe Govinda Full Video Song _ Indra _ Chiranjeevi _ Sonali Bendre _ Mani Sharma _ B Gopal.mp3",
+            "Sasirekha Lyrical _ Mana ShankaraVaraPrasad Garu _ Chiranjeevi, Nayanthara _ Bheems _ Anil Ravipudi.mp3"
+        ]
+    },
+    "cs": {
+        "title": " Ram charan Playlist",
+        "description": "Ram charan Songs for you ",
+        "songs": [
+            "Chirutha Songs _ Love You ra Video Song _ Telugu Latest Video Songs _ Ram Charan, Neha Sharma.mp3",
+            "Chirutha Video Songs _ Chamka Chamka Video Song _ Ramcharan, Neha Sharma _ Sri Balaji Video.mp3",
+            "Chirutha Video Songs _ Maro Maro Video Song _ Ramcharan, Neha Sharma _ Sri Balaji Video.mp3",
+            "Dhruva Telugu Lyrics _ Dhruva Movie _ Ram Charan _ HipHopTamizha _ Maa Paata Mee Nota.mp3",
+            "Dillaku Dillaku Video Song __ Racha Movie __ Ram Charan, Tamannaah __ Volga Musicbox.mp3",
+            "Ivala Full Song __ Chirutha Movie __ Ram Charan Teja, Neha.mp3",
+            "Ola Olaala Ala Video Song _ Orange-ఆరెంజ్  Telugu Movie Songs _  Ram Charan _ Vega Music.mp3",
+            "ORANGE LOVE 4K WITH 5.1 DOLBY TRUE HD AUDIO _ORANGE _RAM CHARAN,GENELIA_HARRIS JAYRAJ_KARUNAKARAN.mp3",
+            "Orange Song - Chilipiga _ Ram Charan, Genelia D'Souza.mp3",
+            "Orange _ Hello Rammante.mp3",
+            "Orange _ Ye Vaipuga (Exclusive).mp3",
+            "Padhe Padhe - Lyrical _ Jersey _ Nani, Shraddha Srinath _ Anirudh Ravichander - (320 Kbps).mp3",
+            "Pareshanura Video Song (EditedVersion) __ DhruvaMovie __ RamCharanTej, Rakul Preet __ HipHopTamizha.mp3",
+            "Rangamma Mangamma Full Video Song _ Rangasthalam Video Songs _Ram Charan, Samantha - (320 Kbps).mp3",
+            "Rooba Rooba Video Song _ Orange - ఆరెంజ్ Telugu Movie Songs _ Ram Charan _ Genelia _ Vega  Music.mp3"
+        ]
+    },
+    "Hindi songs": {
+        "title": "Hindi Songs Playlist",
+        "description": "Hindi songs for you",
+        "songs": [
+            "Aaj Ki Raat - Full Song _ Stree 2_ Tamannaah Bhatia, Rajkummar Rao, Sachin-Jigar, Madhubanti,Divya K.mp3",
+            "DILBAR Full Song _ Satyameva Jayate _ John Abraham Nora Fatehi _ Tanishk B Neha Kakkar Ikka Dhvani (1).mp3",
+            "DILBAR Full Song _ Satyameva Jayate _ John Abraham Nora Fatehi _ Tanishk B Neha Kakkar Ikka Dhvani.mp3",
+            "Namo Namo - Lyrical _ Kedarnath _ Sushant Rajput _ Sara Ali Khan _ Amit Trivedi _ Amitabh B.mp3",
+            "Qaafirana - Arijit Singh & Nikita Gandhi _ Kedarnath _ Sushant Singh Rajput & Sara Ali Khan.mp3",
+            "RAID 2_ NASHA (Song) _ Tamannaah B, Ajay D, Riteish D _ Jasmine Sandlas, Sachet T, Jaani _ Bhushan K.mp3"
+        ]
+    },
+    "Jr NTR": {
+        "title": "Jr NTR Playlist",
+        "description": "Jr NTR songs for you",
+        "songs": [
+            "Full Video_ Chuttamalle - Devara _ NTR _ Janhvi Kapoor _ Anirudh _ Shilpa Rao _ Koratala Siva.mp3",
+            "Nandamuri Chandamama Entha Uppoo Full Energetic Video Song _ NTR _ Genelia _ @ManaChitraalu.mp3",
+            "Nee Kallalona Full Video Song _ Jai Lava Kusa Songs _ Jr NTR, Raashi Khanna, DSP _ Telugu Songs 2017.mp3",
+            "Nuvvu Vijilesthey Lyrical Song _ Simhadri Songs _ Jr Ntr, Bhoomika, Ankitha _ M.M.Keeravani.mp3",
+            "Oosaravelli Movie Songs Jukebox _ Jr NTR, Tamannaah Bhatia _ Devi Sri Prasad _ Surender Reddy.mp3",
+            "Renduvela Rendu Varaku Full Video Song _ Allari Ramudu _ N.T.Rama Rao Jr _ Gajala _ Arthi Agarwal.mp3",
+            "Yamadonga Video Songs Back to Back _ Jr.NTR, Priyamani, Mamtha Mohandas.mp3"
+        ]
+    },
+    "Karthi": {
+        "title": "Karthi Playlist",
+        "description": "Karthi songs for you",
+        "songs": [
+            "Awaara - Arere Vaanaa Video _ Yuvanshankar _ Karthi.mp3",
+            "Awaara - Chiru Chiru Video _ Yuvanshankar _ Karthi.mp3",
+            "Awaara - Mandaara Poovalle Video _ Yuvanshankar _ Karthi.mp3",
+            "Awaara - Nee Yadalo Naaku Video _ Yuvanshankar _ Karthi _ Telugu Song.mp3",
+            "Awaara - Nee Yadalo Naaku Video _ Yuvanshankar _ Karthi.mp3",
+            "Cheliyaa - Hamsaro Telugu Video _ AR Rahman _ Karthi, Aditi Rao.mp3",
+            "Paiya - Adada Mazhaida Video _ Karthi, Tamannah _ Yuvan Shankar Raja.mp3"
+        ]
+    },
+    "Mahesh babu": {
+        "title": "Mahesh Babu Playlist",
+        "description": "Mahesh Babu songs for you",
+        "songs": [
+            "Aagadu Movie Songs _ Bhel Poori Full Video Song _ Mahesh Babu, Tamanna _ Latest Telugu Superhits.mp3",
+            "Athidi Movie Songs _ Satyam Emito Video Song _ Mahesh Babu, Amrita Rao.mp3",
+            "Bangaru Kalla Mahesh Babu, Sonali Bendre Full Movie Song _ Telugu Videos.mp3",
+            "Businessman Telugu Movie Songs _ Pilla Chao Video Song _ Mahesh Babu _ Kajal Agarwal _ Vega Music.mp3",
+            "Choododdantunna 4K Full HD Video Song _ Pokiri _ Mahesh Babu _ Ileana _ Puri Jagannadh _ Mani Sharma.mp3",
+            "Kalaavathi - Video Song _ Sarkaru Vaari Paata _ Mahesh Babu _ Keerthy Suresh _ Thaman S _ Parasuram.mp3",
+            "Kurchi Madathapetti Telugu Lyrics _Guntur Kaaram _Mahesh Babu, Sreeleela _Poorna _Maa Paata Mee Nota.mp3"
+        ]
+    },
+    "Mass": {
+        "title": "Mass songs",
+        "description": "Songs for vibe ",
+        "songs": [
+            "Kurchi Madathapetti Telugu Lyrics _Guntur Kaaram _Mahesh Babu, Sreeleela _Poorna _Maa Paata Mee Nota.mp3",
+            "RRR  NATU NATU SONG IN TELUGU 1080p FHD.mp3"
+        ]
+    },
+    "melody": {
+        "title": "Melody songs",
+        "description": "Songs for pleasent sound ",
+        "songs": [
+            "Aarambhame Le - Anthem Of JERSEY _ Lyrical _ Nani & Shraddha Srinath _ Anirudh Ravichander.mp3",
+            "Full Video_ Gaaju Bomma _ HI NANNA _ Nani, Mrunal T _ Baby Kiara K_ Shouryuv _ Hesham Abdul Wahab.mp3",
+            "Hello Rammante Video Song _ Orange-ఆరెంజ్ Telugu Movie Songs _ Ram Charan _ Vega Music.mp3",
+            "Needa Padadhani - Full Video _ Jersey _ Nani, Shraddha Srinath _ Anirudh Ravichander _ Darshan Raval.mp3",
+            "Ola Olaala Ala Video Song _ Orange-ఆరెంజ్  Telugu Movie Songs _  Ram Charan _ Vega Music.mp3"
+        ]
+    },
+    "Nagarjuna": {
+        "title": "Nagarjuna Playlist",
+        "description": "Nagarjuna songs for you",
+        "songs": [
+            "Andama Anduma Video Song - Nagarjuna, Sridevi Evergreen Superhit Song _ Govinda Govinda Movie Songs.mp3",
+            "Nuvvu Ready Nenu Ready Video Song with Lyrics _ King Movie Songs _ Nagarjuna, Trisha _ TeluguOne.mp3",
+            "Nuvvu Vasthavani Songs - Patala Pallakivai (Male) - Nagarjuna - Simran.mp3",
+            "Priya Raagale Song With Telugu Lyrics _ Hello Brother I Nagarjuna, Soundarya, Ramya Krishnan.mp3",
+            "Priya Raagale Video Song _ Hello Brother Telugu Movie Songs _ Nagarjuna _ Soundarya _ Ramya Krishna.mp3",
+            "Soniya Soniya Telugu Lyrical Song _ Rakshakudu _ Nagarjuna, Sushmita Sen _ A.R. Rahman _Udit Narayan.mp3"
+        ]
+    },
+    "Nani": {
+        "title": "Nani Playlist",
+        "description": "Nani songs for you",
+        "songs": [
+            "Aaya Sher - Lyrical _ The Paradise _ Nani _ Anirudh Ravichander _ Srikanth Odela.mp3",
+            "Adhento Gaani Vunnapaatuga _ JERSEY _ Nani, Shraddha Srinath _ Anirudh Ravichander _ Telugu Song.mp3",
+            "Full Video_ Gaaju Bomma _ HI NANNA _ Nani, Mrunal T _ Baby Kiara K_ Shouryuv _ Hesham Abdul Wahab.mp3",
+            "Hi Nanna_ Adigaa _ Nani, Mrunal Thakur, Baby Kiara _ Hesham Abdul Wahab _ Krishna Kanth _ Shouryuv.mp3",
+            "Padhe Padhe - Full Video _ Jersey _ Nani & Shraddha Srinath _ Anirudh Ravichander.mp3",
+            "Padhe Padhe - Lyrical _ Jersey _ Nani, Shraddha Srinath _ Anirudh Ravichander.mp3",
+            "Padhe Padhe song lyrics __ Jersey __ Nani __ Nani Creations.mp3",
+            "Prema Velluva - Lyrical _ HIT 3 _ Nani _ Sailesh Kolanu _ Srinidhi Shetty _ Mickey J Meyer.mp3"
+        ]
+    },
+    "ncs": {
+        "title": "No copyright songs",
+        "description": "Songs for you ",
+        "songs": [
+            "alexgrohl-burn-the-inspiring-rock-trailer-478796.mp3",
+            "bransboynd-night-summer-lounge-473222.mp3",
+            "brotheration_records-love-of-records-presents-323697.mp3",
+            "deltax-music-honey-kisses-413841.mp3",
+            "freemusiclab-music-i-free-music-lab-release-469493.mp3",
+            "giorgiovitte-berry-groovy-bass-trap-476603.mp3",
+            "kontraa-no-sleep-hiphop-music-473847.mp3",
+            "tunetank-inspiring-cinematic-music-409347.mp3"
+        ]
+    },
+    "Nithin": {
+        "title": "Nithin Playlist",
+        "description": "Nithin songs for you",
+        "songs": [
+            "Adirindey Full Video Song With English Lyrics _ Macherla Niyojakavargam _ Nithiin _ Krithi Shetty.mp3",
+            "Nuvvante Naku Full Video Song _ Heart Attack _ Nithiin, Adah Sharma _ Puri Jagannadh _ Anup Rubens.mp3",
+            "Oorantha Song Telugu Lyrics _ Rang De Songs _ Telugu Songs _ Maa Paata Mee Nota.mp3",
+            "Poola Ghuma Ghuma VideoSong __ Shreya Ghoshal __ Charmi __ Nithin  __ Manisharma __ Shalimarcinema.mp3",
+            "Ra Ra Reddy I’m Ready Video Song (Telugu) _ Macherla Niyojakavargam _Nithiin, Anjali _ Telugu songs.mp3",
+            "SinglesAnthem Full Video Song with Lyrics __ Bheeshma __ Nithiin, Rashmika Mandanna #telugusongs.mp3",
+            "Sri Anjaneyam । Ooregi Raavayya Video Song _ Nithin, Charmi.mp3"
+        ]
+    },
+    "Pawan kalyan": {
+        "title": "Pawan Kalyan Playlist",
+        "description": "Pawan Kalyan songs for you",
+        "songs": [
+            "Cameraman Gangatho Rambabu Telugu Movie Songs _ Melikalu Video Song _ Pawan Kalyan _ Vega Music.mp3",
+            "Gabbar Singh Songs _ Dekho Dekho Gabbar Singh Full Video Song _ Latest Telugu Superhits.mp3",
+            "Gabbar Singh Songs _ Dil Se Dil Se Full Video Song _ Latest Telugu Superhits @SriBalajiMovies.mp3",
+            "Gelupu Thalupule 4K Full HD Video Song _ Teenmaar _ Pawan Kalyan _ Trisha - Keerti _ iDream Media.mp3",
+            "Tholi Prema Movie __ Yemaindo Yemo Video Songs __ Pawan Kalyan , Keerthi Reddy.mp3",
+            "Vayyari Bhama Video Song _ Thammudu Telugu Movie _ Pawan Kalyan _ Aditi Govitrikar _ Mango Music.mp3"
+        ]
+    },
+    "Prabhas": {
+        "title": "Prabhas Playlist",
+        "description": "Prabhas songs for you",
+        "songs": [
+            "Full Video_ Rebel Saab (Telugu) - The RajaSaab _ Prabhas _ Maruthi  _ Thaman S _ Vishwa Prasad.mp3",
+            "Manassa Song _ Munna _ Prabhas, Ileana D'Cruz _  Harris Jayaraj _ Vamshi Paidipally _ Telugu Songs.mp3",
+            "Mr Perfect Songs _ Chali Chali Ga Allindi Video Song _ Prabhas _ Kajal Aggarwal _ Telugu Movie Songs.mp3",
+            "My Name Is Billa 4K Video Song _ Billa (Telugu) _ Prabhas, Anushka Shetty _ Mani Sharma.mp3",
+            "Nache Nache - Video Song _ The RajaSaab _ Prabhas, Malavika Mohan, Nidhhi Agerwal, Riddhi _ Thaman S.mp3",
+            "Sahana Sahana Song (Telugu) _ The RajaSaab _ Prabhas _ Nidhhi Agerwal _ Maruthi _ Thaman S_ Vishal M.mp3"
+        ]
+    },
+    "Rajini kanth": {
+        "title": "Rajini kanth Playlist",
+        "description": "Rajini kanth songs for you",
+        "songs": [
+            "Adharani vaadu __ Sivaji Telugu Video Songs __ A R RAHMAN.mp3",
+            "Anirudh Ravichander, Dinker Kalvala, & Bhaskarabhatla Ravi Kumar - Hukum - Telugu (From _Jailer_) - (320 Kbps).mp3",
+            "Bandhamele - Video_ Jailer _ Superstar Rajinikanth _ Sun Pictures _ Anirudh _ Nelson_ PVNS Rohit.mp3",
+            "JAILER - Kaavaalaa Video Song _ Superstar Rajinikanth _ Sun Pictures _ Anirudh _ Nelson _ Tamannaah.mp3",
+            "Narasimha - Audio Song _ Narasimha _ Rajinikanth _ A.R. Rahman _ S.P. Balasubrahmanyam.mp3",
+            "Narasimha Movie Songs __ Yekku Tholi Mettu Video Song __ Rajinikanth __ Soundarya __ #Narasimha [ga_zxTzgPZ4].mp3",
+            "Okade Okkadu Full Video Song _ Muthu Telugu Songs _ Rajinikanth, Meena _ A R Rahman [NRnRrzEOLls].mp3",
+            "Petta (Telugu) - Massu Maranam Video _ Rajinikanth _ Anirudh Ravichander - (320 Kbps).mp3",
+            "Singarala Video Song _ Dalapathi Telugu Movie _ Rajinikanth _ Ilayaraja _ Shemaroo Telugu.mp3",
+            "Vettaiyan The Hunter (Telugu) - Manasilaayo Video _ Rajinikanth _ T.J. Gnanavel _ Anirudh - (64 Kbps).mp3",
+            "Vikramasimha - Yedemaina Sakhi Video _ A.R. Rahman _ Rajinikanth, Deepika.mp3"
+        ]
+    },
+    "Ram": {
+        "title": "Ram Playlist",
+        "description": "Ram songs for you",
+        "songs": [
+            "Full Video_ Nuvvunte Chaley _ Andhra King Taluka _ Ram Pothineni _ Bhagyashri Borse _ Mahesh Babu P.mp3",
+            "Kandireega Full Video Songs __  Champaka Maala Video Song __ Ram Pothineni __ Hansika __ Aksha.mp3",
+            "Ongole Githa Songs _ Chal Challe _ Ram Pothineni, Kriti Kharbanda _ Full HD.mp3",
+            "Ongole Githa Songs _ Mama Maraju _ Ram Pothineni, Kriti Kharbanda, Prakash Raj _ HD.mp3",
+            "Raa Chilaka Song With Lyrics _ Ongolu Gitta Telugu Songs _ Ram, Kriti Karbanda _ Love Songs Telugu.mp3",
+            "Ready Telugu Movie Songs _ Ninne Pelladukoni Video Song _ Ram _ Genelia _ DSP _ Mango Music.mp3",
+            "Ready Telugu Movie Songs _ Om Namaste Bolo Video Song _ Ram _ Genelia _ DSP _ Mango Music.mp3"
+        ]
+    },
+    "Ravi Teja": {
+        "title": "Ravi Teja Playlist",
+        "description": "Ravi Teja songs for you",
+        "songs": [
+            "Addham Mundhu _ Bhartha Mahasayulaku Wignyapthi _ Ravi Teja, Dimple Hayathi _ Bheems Ceciroleo.mp3",
+            "Entha Panichesindi Prema _ Dongodu _ Ravi Teja, Kalyani _ Hariharan, Sujatha _ Telugu Love Songs.mp3",
+            "Full Video_ Nallanchu Thellacheera _ Mr Bachchan_ Ravi Teja, Bhagyashri _ Mickey J Meyer _ Harish S.mp3",
+            "I Love You Oh Sravani Full Video Song _ Venky _ Ravi Teja _ Srinu Vaitla _ Devi Sri Prasad _ Dolby ..mp3",
+            "Neeve Neeve Full Movie Song _ Ravi Teja, Jayasudha _ Telugu Videos.mp3",
+            "Silakemo Video Song - Venky Movie __ Ravi Teja __ Raasi __ Srinu Vaitla __ DSP.mp3",
+            "Vaammo Vaayyo _ Bhartha Mahasayulaku Wignyapthi _ Ravi Teja, Ashika R, Dimple H _ Bheems Ceciroleo.mp3"
+        ]
+    },
+    "Surya": {
+        "title": "Suriya Playlist",
+        "description": "Suriya songs for you",
+        "songs": [
+            "Aakaasam Nee Haddhu Ra - Pilla Puli Video _ Suriya _ G.V. Prakash Kumar.mp3",
+            "Chudodde Nannu Chudodde Full Video Song 4K _ Aaru _ Surya _ Trisha _ Devi Sri Prasad _ Vega Music.mp3",
+            "Gang - Naala Nenu Telugu Video _ Suriya, Keerthy Suresh _ Anirudh.mp3",
+            "Hrudayam Ekkadunnadi 4k Video Song __ 4k video song__Ghajini 4k video__Surya - Aasin.mp3",
+            "Kallu Moosi Yoschisthey - Veedokkade Songs _ Suriya _ Tamannaah _ Harris Jayaraj _ KV Anand _ AVM.mp3",
+            "Oka Maru Kalisina Andham 4k Full Video Song _ Ghajini Telugu Movie _ Suriya.mp3",
+            "Oole Oolele 4k Video Song __ Yamudu __ Surya, Anushka __ Devi Sri Prasad __ S.Hari.mp3"
+        ]
+    },
+    "Trending songs": {
+        "title": "Trending songs",
+        "description": "Songs for vibe ",
+        "songs": [
+            "Aaya Sher - Lyrical _ The Paradise _ Nani _ Anirudh Ravichander _ Srikanth Odela.mp3",
+            "ANIMAL_Pehle Bhi Main(Full Video) _ Ranbir Kapoor,Tripti Dimri _Sandeep V _Vishal M,Raj S _Bhushan K.mp3",
+            "Jaan Se Guzarte Hain _ Dhurandhar 2 The Revenge _ Ranveer Singh _ Sara Arjun _ New Hindi Song 2026.mp3",
+            "PEDDI_ Rai Rai Raa Raa Song (Hindi) _ Ram Charan _ Janhvi Kapoor _ Buchi Babu Sana _ AR Rahman.mp3",
+            "Tamma Tamma (Audio) _ Dhurandhar The Revenge _ Ranveer Singh _Bappi Lahiri,Anuradha Paudwal,Indeevar.mp3"
+        ]
+    },
+    "Uday kiran": {
+        "title": "Uday Kiran Playlist",
+        "description": "Uday Kiran songs for you",
+        "songs": [
+            "Avunanna Kadanna Songs - Nelathalli Gundelo - Sada - Uday Kiran.mp3",
+            "Ila Choodu _ Nee Sneham _ Uday Kiran, Aarti Agarwal _ Rajesh, Usha _ R. P. Patnaik _ Telugu Songs.mp3",
+            "Kontha Kalam Kindata _ Nee Sneham _ Uday Kiran, Jatin Grewal _ R. P. Patnaik, Rajesh _ Telugu Songs.mp3",
+            "Manasantha Nuvve Video Songs - Evvarineppudu - Uday Kiran, Reema Sen.mp3",
+            "Udayinchina __ Kalusukovalani (2002).mp3",
+            "Veyi Kannulatho _ Nee Sneham _ Uday Kiran, Aarti Agarwal _ R. P. Patnaik, Usha _ Telugu Love Songs.mp3"
+        ]
+    },
+    "Venkatesh": {
+        "title": "Venkatesh Playlist",
+        "description": "Venkatesh songs for you",
+        "songs": [
+            "Kavvinchake Full Song __ Raja Movie __ Venkatesh, Soundarya.mp3",
+            "Manase Eduru Tirige Video Song - Venkatesh, Preity Zinta Superhit Song _ Premante idera Movie Songs.mp3",
+            "Raja Movie Songs _ Edo Oka Ragam (Female) Song _ Venkatesh _ Soundarya _ SA Rajkumar.mp3",
+            "Raja Telugu Movie Songs - Kannula Logililo - Venkatesh, Soundarya.mp3",
+            "Raja Telugu Movie Songs _ Pallavinchu Toli Raagame Song _ Venkatesh, Soundarya _ TeluguOne.mp3",
+            "Unnamata Cheppaneevu 4K Video Song _ Nuvvu Naaku Nachav _ Venkatesh _ Aarthi Agarwal _ Koti.mp3"
+        ]
+    }
+};
+
+function formatTime(seconds) {
+    if (isNaN(seconds) || seconds < 0) {
+        return "00:00";
+    }
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+}
+
+function safeDecode(value) {
+    try {
+        return decodeURIComponent(value);
+    } catch {
+        return value;
+    }
+}
+
+function normalizeFolder(folder) {
+    return folder
+        .replace(/^\/+|\/+$/g, "")
+        .split("/")
+        .map(safeDecode)
+        .join("/");
+}
+
+function encodePath(path) {
+    return path
+        .split("/")
+        .map(segment => encodeURIComponent(segment))
+        .join("/");
+}
+
+async function loadCatalog() {
+    try {
+        const res = await fetch("songs/songs.json");
+        if (res.ok) {
+            const data = await res.json();
+            if (data && Object.keys(data).length > 0) {
+                albumCatalog = data;
+            }
+        }
+    } catch (e) {
+        // Fallback to embedded albumCatalog
+    }
+}
+
+async function getsongs(folder) {
+    currFolder = normalizeFolder(folder);
+    const folderName = currFolder.split("/").pop();
+
+    songs = [];
+    if (albumCatalog[folderName] && Array.isArray(albumCatalog[folderName].songs) && albumCatalog[folderName].songs.length > 0) {
+        songs = [...albumCatalog[folderName].songs];
+    } else {
+        try {
+            const response = await fetch(`${encodePath(currFolder)}/`);
+            if (response.ok) {
+                const html = await response.text();
+                const div = document.createElement("div");
+                div.innerHTML = html;
+                const anchors = div.getElementsByTagName("a");
+
+                for (let i = 0; i < anchors.length; i++) {
+                    const rawHref = anchors[i].getAttribute("href");
+                    if (!rawHref) continue;
+
+                    const cleanHref = rawHref.split("?")[0];
+                    if (!cleanHref.toLowerCase().endsWith(".mp3")) continue;
+
+                    const rawFileName = cleanHref.replaceAll("\\", "/").split("/").filter(Boolean).pop();
+                    if (!rawFileName) continue;
+
+                    const fileName = safeDecode(rawFileName);
+                    if (!songs.includes(fileName)) {
+                        songs.push(fileName);
+                    }
+                }
+            }
+        } catch (e) {
+            console.warn("Directory listing fetch failed, using fallback:", e);
+        }
+    }
+
+    const songUL = document.querySelector(".songlist ul");
+    songUL.innerHTML = "";
+    for (const song of songs) {
+        const li = document.createElement("li");
+
+        const musicIcon = document.createElement("img");
+        musicIcon.className = "invert";
+        musicIcon.src = "img/Music.svg";
+        musicIcon.alt = "Music";
+
+        const infoDiv = document.createElement("div");
+        infoDiv.className = "info";
+
+        const titleDiv = document.createElement("div");
+        titleDiv.textContent = song;
+
+        const artistDiv = document.createElement("div");
+        artistDiv.textContent = "Praveen";
+
+        infoDiv.appendChild(titleDiv);
+        infoDiv.appendChild(artistDiv);
+
+        const playNowDiv = document.createElement("div");
+        playNowDiv.className = "playnow";
+
+        const playNowSpan = document.createElement("span");
+        playNowSpan.textContent = "Play Now";
+
+        const playIcon = document.createElement("img");
+        playIcon.className = "invert";
+        playIcon.src = "img/play.svg";
+        playIcon.alt = "play";
+
+        playNowDiv.appendChild(playNowSpan);
+        playNowDiv.appendChild(playIcon);
+
+        li.appendChild(musicIcon);
+        li.appendChild(infoDiv);
+        li.appendChild(playNowDiv);
+
+        li.addEventListener("click", () => {
+            playMusic(song);
+        });
+
+        songUL.appendChild(li);
+    }
+
+    return songs;
+}
+
+const playMusic = (track, pause = false) => {
+    if (!track) return;
+
+    currentTrack = track;
+    Currentsong.src = `${encodePath(currFolder)}/${encodeURIComponent(track)}`;
+
+    const playBtn = document.querySelector(".play");
+    if (!pause) {
+        Currentsong.play().catch(err => {
+            console.error("Audio playback failed:", err);
+        });
+        if (playBtn) playBtn.src = "img/pause1.svg";
+    } else if (playBtn) {
+        playBtn.src = "img/play.svg";
+    }
+
+    const infoElem = document.querySelector(".songinfo");
+    if (infoElem) infoElem.textContent = track;
+    const timeElem = document.querySelector(".songtime");
+    if (timeElem) timeElem.textContent = "00:00 / 00:00";
+    const circle = document.querySelector(".circle");
+    if (circle) circle.style.left = "0%";
+};
+
+async function displayAlbums() {
+    const cardContainer = document.querySelector(".right-container");
+    cardContainer.innerHTML = "";
+
+    const albumEntries = Object.entries(albumCatalog);
+    for (const [folder, data] of albumEntries) {
+        const encodedFolder = encodeURIComponent(folder);
+
+        const card = document.createElement("div");
+        card.dataset.folder = folder;
+        card.className = "card";
+
+        const playCard = document.createElement("div");
+        playCard.className = "playcard";
+        playCard.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="60" fill="#1fdf64" />
+                <polygon points="50,40 50,80 82,60" fill="black" />
+            </svg>`;
+
+        const img = document.createElement("img");
+        img.src = `songs/${encodedFolder}/cover.jpeg`;
+        img.alt = data.title || folder;
+
+        const title = document.createElement("h3");
+        title.textContent = data.title || folder;
+
+        const description = document.createElement("p");
+        description.textContent = data.description || "";
+
+        card.appendChild(playCard);
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(description);
+
+        card.addEventListener("click", async function () {
+            await getsongs(`songs/${this.dataset.folder}`);
+            if (songs.length > 0) {
+                playMusic(songs[0]);
+            }
+        });
+
+        cardContainer.appendChild(card);
+    }
+}
+
+async function main() {
+    await loadCatalog();
+
+    const play = document.querySelector(".play");
+    const rangeInput = document.querySelector(".range input");
+    const volumeIcon = document.querySelector(".volume img");
+
+    if (rangeInput) {
+        Currentsong.volume = Number(rangeInput.value) / 100;
+        lastVolume = Currentsong.volume || 1;
+    }
+
+    // Load initial playlist
+    await getsongs("songs/ncs");
+    if (songs.length > 0) {
+        playMusic(songs[0], true);
+    }
+
+    // Display all albums on the page
+    await displayAlbums();
+
+    // Keep play/pause icon in sync with audio state
+    Currentsong.addEventListener("play", () => {
+        if (play) play.src = "img/pause1.svg";
+    });
+
+    Currentsong.addEventListener("pause", () => {
+        if (play) play.src = "img/play.svg";
+    });
+
+    // Auto-play next track when current song ends
+    Currentsong.addEventListener("ended", () => {
+        const index = songs.indexOf(currentTrack);
+        if (index !== -1 && index + 1 < songs.length) {
+            playMusic(songs[index + 1]);
+        } else if (play) {
+            play.src = "img/play.svg";
+        }
+    });
+
+    // Attach event listener to play/pause button
+    if (play) {
+        play.addEventListener("click", () => {
+            if (!Currentsong.src && songs.length > 0) {
+                playMusic(songs[0]);
+                return;
+            }
+            if (Currentsong.paused) {
+                Currentsong.play().catch(err => console.error("Audio playback failed:", err));
+            } else {
+                Currentsong.pause();
+            }
+        });
+    }
+
+    // Listen for time update and metadata loaded events
+    const updateProgress = () => {
+        const timeElem = document.querySelector(".songtime");
+        if (timeElem) {
+            timeElem.textContent = `${formatTime(Currentsong.currentTime)} / ${formatTime(Currentsong.duration)}`;
+        }
+        const circle = document.querySelector(".circle");
+        if (circle && !isNaN(Currentsong.duration) && Currentsong.duration > 0) {
+            circle.style.left = `${(Currentsong.currentTime / Currentsong.duration) * 100}%`;
+        }
+    };
+    Currentsong.addEventListener("timeupdate", updateProgress);
+    Currentsong.addEventListener("loadedmetadata", updateProgress);
+
+    // Seekbar click listener
+    const seekbar = document.querySelector(".seekbar");
+    if (seekbar) {
+        seekbar.addEventListener("click", e => {
+            const rect = seekbar.getBoundingClientRect();
+            let percent = ((e.clientX - rect.left) / rect.width) * 100;
+            percent = Math.max(0, Math.min(100, percent));
+            const circle = document.querySelector(".circle");
+            if (circle) circle.style.left = `${percent}%`;
+            if (!isNaN(Currentsong.duration) && Currentsong.duration > 0) {
+                Currentsong.currentTime = (Currentsong.duration * percent) / 100;
+            }
+        });
+    }
+
+    // Hamburger menu listener
+    const hamburger = document.querySelector(".hamburgercont");
+    if (hamburger) {
+        hamburger.addEventListener("click", () => {
+            document.querySelector(".left").classList.add("open");
+        });
+    }
+
+    // Close sidebar listener
+    const closeBtn = document.querySelector(".close");
+    if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+            document.querySelector(".left").classList.remove("open");
+        });
+    }
+
+    // Previous and next track listeners
+    const prevBtn = document.querySelector(".previous");
+    if (prevBtn) {
+        prevBtn.addEventListener("click", () => {
+            const index = songs.indexOf(currentTrack);
+            if (index > 0) {
+                playMusic(songs[index - 1]);
+            }
+        });
+    }
+
+    const nextBtn = document.querySelector(".next");
+    if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+            const index = songs.indexOf(currentTrack);
+            if (index !== -1 && index + 1 < songs.length) {
+                playMusic(songs[index + 1]);
+            }
+        });
+    }
+
+    // Volume slider listener
+    if (rangeInput) {
+        rangeInput.addEventListener("input", e => {
+            const volume = Number(e.target.value) / 100;
+            Currentsong.volume = volume;
+            if (volumeIcon) {
+                if (volume > 0) {
+                    lastVolume = volume;
+                    volumeIcon.src = "img/volume.svg";
+                } else {
+                    volumeIcon.src = "img/mute.svg";
+                }
+            }
+        });
+    }
+
+    // Mute/unmute button listener
+    if (volumeIcon) {
+        volumeIcon.addEventListener("click", () => {
+            if (Currentsong.volume > 0) {
+                lastVolume = Currentsong.volume;
+                Currentsong.volume = 0;
+                if (rangeInput) rangeInput.value = 0;
+                volumeIcon.src = "img/mute.svg";
+            } else {
+                const restored = lastVolume > 0 ? lastVolume : 0.5;
+                Currentsong.volume = restored;
+                if (rangeInput) rangeInput.value = Math.round(restored * 100);
+                volumeIcon.src = "img/volume.svg";
+            }
+        });
+    }
+
+    // Filter albums via search input
+    const searchInput = document.querySelector(".find");
+    if (searchInput) {
+        searchInput.addEventListener("input", e => {
+            const query = e.target.value.trim().toLowerCase();
+            document.querySelectorAll(".right-container .card").forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(query) ? "" : "none";
+            });
+        });
+    }
+}
+
+main();

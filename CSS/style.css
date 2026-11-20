@@ -228,26 +228,43 @@ body {
 }
 
 .right-container {
+
     margin: 20px;
+    padding-bottom: 120px;
     padding-bottom: 140px;
     display: flex;
+    gap: 10px;
     gap: 16px;
     flex-wrap: wrap;
 }
 
+.card>img {
+    width: 100%;
+    object-fit: contain;
+}
+
 .card {
+    padding: 10px;
+    width: 200px;
+    border-radius: 5px;
+    background-color: #252525;
     padding: 12px;
     width: 180px;
     border-radius: 8px;
     background-color: #181818;
     position: relative;
+    transition: all .9s;
     transition: background-color 0.3s ease;
     display: flex;
     flex-direction: column;
 }
+ .card:hover {
 
 .card:hover {
     cursor: pointer;
+    background-color:rgb(115, 111, 111);
+    --a : 1;
+} 
     background-color: #282828;
     --a: 1;
 }
@@ -260,6 +277,7 @@ body {
 }
 
 .card>h3 {
+    margin-top: 5px;
     margin-top: 10px;
     margin-bottom: 4px;
     font-size: 15px;
@@ -292,10 +310,13 @@ body {
 
 .playcard {
     position: absolute;
+    right: 15px;
+    top: 140px;
     right: 18px;
     top: 135px;
     opacity: var(--a);
     transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+
 }
 
 .buttons {
@@ -336,6 +357,12 @@ body {
 
 .playbar {
     position: fixed;
+    bottom: 0px;
+    background-color: #8c8799;
+    border-radius: 15px;
+    padding: 20px;
+    width: 66vw;
+    min-height: 40px;
     bottom: 12px;
     left: calc(30vw + 20px);
     right: 20px;
@@ -408,10 +435,15 @@ body {
 }
 
 .seekbar {
+    background-color: black;
+    height: 3px;
+    width: 65vw;
     background-color: #555555;
     height: 4px;
     width: calc(100% - 40px);
     position: absolute;
+    bottom: 0;
+    margin: 10px;
     bottom: 8px;
     left: 20px;
     border-radius: 2px;
@@ -419,6 +451,12 @@ body {
 }
 
 .circle {
+    width: 3px;
+    padding: 6px;
+    background-color: black;
+    border-radius: 100%;
+    position: relative;
+    bottom: 5px;
     width: 12px;
     height: 12px;
     background-color: white;
@@ -427,6 +465,7 @@ body {
     top: 50%;
     transform: translate(-50%, -50%);
     left: 0%;
+    transition: left 0.5s;
     transition: left 0.1s linear;
 }
 
@@ -436,12 +475,14 @@ body {
 
 .songinfo,
 .songtime {
+    color: black;
     color: white;
 }
 
 .toplayer {
     display: flex;
     justify-content: space-between;
+    padding: 20px 0px;
     align-items: center;
     padding: 0px 4px;
 }
@@ -457,6 +498,7 @@ body {
 }
 
 .songinfo {
+    width: 385px;
     width: 250px;
     max-width: 30%;
     white-space: nowrap;
@@ -514,6 +556,8 @@ body {
     }
 
     .playbar {
+        width: calc(100vw - 60px);
+        padding: 0px;
         left: 15px;
         right: 15px;
         width: auto;
@@ -521,6 +565,7 @@ body {
     }
 
     .seekbar {
+        width: calc(100vw - 75px);
         width: calc(100% - 30px);
         left: 15px;
     }
@@ -540,10 +585,12 @@ body {
     .right-container {
         margin: 0;
         justify-content: center;
+        padding-bottom: 140px;
         padding-bottom: 160px;
     }
 
     .right {
+        padding-left: 30px;
         padding-left: 15px;
     }
 
@@ -567,6 +614,9 @@ body {
     }
 
     .playbar {
+        width: calc(100vw - 60px);
+        padding-right: 30px;
+        padding-left: 10px;
         left: 8px;
         right: 8px;
         width: auto;

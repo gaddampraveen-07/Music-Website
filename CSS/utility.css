@@ -28,6 +28,7 @@
     width: 30vw;
     flex-shrink: 0;
     height: calc(100% - 6px);
+    overflow: hidden;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
